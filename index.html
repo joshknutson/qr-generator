@@ -1,0 +1,117 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+
+    <head>
+        <title>QR Code Generator</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+        <script type="text/javascript" src="qrcode.min.js"></script>
+        <style>
+            #qrcode {
+                min-width: 256px;
+                min-height: 256px;
+            }
+
+            .lds-ring {
+                display: inline-block;
+                position: relative;
+                width: 80px;
+                height: 80px;
+            }
+
+            .lds-ring div {
+                box-sizing: border-box;
+                display: block;
+                position: absolute;
+                width: 64px;
+                height: 64px;
+                margin: 8px;
+                border: 8px solid #000;
+                border-radius: 50%;
+                animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+                border-color: #000 transparent transparent transparent;
+            }
+
+            .lds-ring div:nth-child(1) {
+                animation-delay: -0.45s;
+            }
+
+            .lds-ring div:nth-child(2) {
+                animation-delay: -0.3s;
+            }
+
+            .lds-ring div:nth-child(3) {
+                animation-delay: -0.15s;
+            }
+
+            @keyframes lds-ring {
+                0% {
+                    transform: rotate(0deg);
+                }
+
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+    </head>
+
+<body>
+    <section class="section">
+        <div class="field">
+            <label class="label">Text for QR Code</label>
+            <div class="control">
+                <input id="text" type="text" class="text is-large" value="https://imagetrend.com" style="width:80%"
+                    placeholder="Enter text for QR Code to generate" />
+            </div>
+        </div>
+        <!-- <div class="columns">
+            <div class="field column">
+                <label class="label">Height</label>
+                <div class="control">
+                    <input id="height" type="number" class="number" value="160" style="width:80%" placeholder="px" />
+                </div>
+            </div>
+            <div class="field column">
+                <label class="label">Width</label>
+                <div class="control">
+                    <input id="width" type="number" class="number" value="160" style="width:80%" placeholder="px" />
+                </div>
+            </div>
+        </div> -->
+    </section>
+    <div class="section">
+        <div class="lds-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="tile" id="qrcode"></div>
+    </div>
+    <script>
+        var qrcode = new QRCode("qrcode");
+
+        function makeCode() {
+            var elText = document.getElementById("text");
+
+            if (!elText.value) {
+                alert("Input a text");
+                elText.focus();
+                return;
+            }
+
+            document.getElementsByClassName('lds-ring')[0].classList.remove('is-hidden')
+            qrcode.makeCode(elText.value);
+            document.getElementsByClassName('lds-ring')[0].classList.add('is-hidden')
+        }
+
+        makeCode();
+        document.getElementById("text").addEventListener("input", makeCode)
+    </script>
+</body>
+
+</html>
